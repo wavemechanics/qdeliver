@@ -1,0 +1,13 @@
+{
+    "version": 1,
+    "accounts": [
+        {
+            "owner": "foo",
+            "domain": "example.com",
+            "url": "http://some/place",
+            "login": "joe",
+            "password": "secret",
+            "notify": true
+        }
+    ]
+}

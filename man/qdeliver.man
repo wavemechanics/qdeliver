@@ -1,0 +1,144 @@
+.TH QDELIVER 1
+
+.SH NAME
+qdeliver \- deliver qmail messages according to webdav instruction list
+
+.SH SYNOPSIS
+.B qdeliver
+[\fB--db\fP \fIuserdb\fP]
+[\fB--handler\fP \fIhandler-script\fP]
+[\fB--notify\fP \fInotify-script\fP]
+\fIlocalpart\fP
+\fIdomain\fP
+
+.SH DESCRIPTION
+\fBqdeliver\fP is a qmail local delivery program that takes instructions from files on a webdav server rather than from local \fB.qmail\fP files.
+
+A list of instructions is downloaded from a webdav server, then each instruction is passed to \fIhandler-script\fP.
+The default handler scripts has instructions such as "forward, "bounce" and "drop".
+
+\fIlocalpart\fP and \fIdomain\fP are used to lookup webdav login details in \fIuserdb\fP.
+The first "-" delimited token in \fIlocalpart\fP is used as the owner in \fIuserdb\fP.
+
+\fIlocalpart\fP is also used to find the webdav file corresponding to the delivery address.
+If there is a file named \fIlocalpart\fP.txt in the webdav directory named in \fIuserdb\fP, then it is downloaded and used as the list of instructions.
+If there is no matching file, but there is a file named \fBdefault\fP.txt, then \fBdefault\fP.txt is copied to \fIlocalpart\fP.txt and its instructions are followed.
+
+.SS userdb
+The \fIuserdb\fP file holds webdav login details for \fIowner\fP-\fIdomain\fP combinations.
+It is a JSON file that looks like this:
+
+.ft C
+.in +3
+.nf
+{
+    "version": 1,
+    "accounts": [
+        {
+            "owner": "joe",
+            "domain": "example.com",
+            "url": "http://webdav.example.com/example.com",
+            "login": "joe",
+            "password": "joeswebdavpassword",
+            "notify": true
+        }
+    ]
+}
+.fi
+.in -3
+.ft P
+
+Any number of of \fBaccounts\fP elements may be included.
+\fBqdeliver\fP will match on \fBowner\fP and \fBdomain\fP.
+
+\fBlogin\fP and \fBpassword\fP are used to login to the webdav server.
+Only HTTP Basic Authentication is supported.
+
+A file named \fIlocalpart\fP.txt will be retrieved from the server and directory named in \fIurl\fP.
+
+\fBnotify\fP is optional, and defaults to false.
+If true, owner@domain will be sent a notification email whenever a new \fIlocalpart\fP.txt file is created.
+
+.SS Delivery Instructions
+
+The file downloaded from webdav should be a text file with one instruction per line.
+Empty lines and lines starting with # are ignored.
+Instructions are executed one at a time in order.
+Standard qmail local command exit values are respected.
+
+Each line is tokenized and passed to \fIhandler-script\fP exactly.
+Apart from escaping and quoting, no processing is done.
+Specifically, it is not possible to refer to environment variables or to invoke any local operating system commands.
+
+.SS handler-script
+
+The handler script executes instructions in the file downloaded from the webdav server.
+It will be called for every line in the instruction file.
+Its arguments are exactly as stated in the instruction file, with quoting removed.
+For example, if a line in the instruction file is \fBforward joe@example.com\fP, then \fB$1\fP in the handler script is \fBforward\fP and \fB$2\fP is \fBjoe@example.com\fP.
+
+Lines can be delimited by \fB\\n\fP, \fB\\r\fP, or \fB\\r\\n\fP.
+Lines starting with \fB#\fP and lines consisting of only whitespace are ignored.
+
+Tokens in lines are whitespace delimited.
+Single and double quotes, and \\-escapes can be used to escape whitespace or special characters.
+\\-escapes cause the next character to be treated as not special, and can be used outside quoted strings, and within double-quoted strings.
+There is no escaping in single-quoted strings.
+
+\fBscripts/qdeliver-handler.sh\fP is an example handler script.
+
+.SS notify-script
+
+When a new address file is created, and the userdb entry for Notify is true, then \fInotify-script\fP will be called with two arguments: the recipient of the notification message, and the new address that was just created.
+If \fInotify-script\fP fails, message may be logged, but nothing else happens; ordinary mail delivery is not impacted.
+
+\fBscripts/qdeliver-notify.sh\fP is an example notify script.
+
+.SH OPTIONS
+
+.TP
+\fB--db\fP \fIuserdb\fP
+Path to userdb.
+Defaults to \fB./users.json\fP.
+
+.TP
+\fB--handler\fP \fIhandler-script\fP
+Path to executable handler.
+Defaults to \fB./qdeliver-handler.sh\fP.
+
+.TP
+\fB--notify\fP \fInotify-script\fP
+Path to notification script.
+Defaults to \fB./qdeliver-notify.sh\fP.
+
+.SH EXIT STATUS
+
+\fBqdeliver\fP conforms to the \fBqmail-local(8)\fP conventions to the extent possible: 0 for success, 111 temporary error, 100 permanent error, and so on.
+It is possible that something executed by the handler script may exit with other values.
+Be careful when setting up the handler script.
+
+.SH EXAMPLE
+
+If \fBvirtualdomains\fP says:
+
+.ft C
+.in +3
+.nf
+example.com:example
+.fi
+.in -3
+.ft P
+
+then you could put this in \fB~alias/.qmail-example-default\fP:
+
+.ft C
+.in +3
+.nf
+|/path/to/qdeliver "$EXT2" "$HOST"
+.fi
+.in -3
+.ft P
+
+.SH SEE ALSO
+
+qmail-local(8), fastforward(1)
