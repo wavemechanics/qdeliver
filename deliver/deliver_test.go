@@ -18,12 +18,12 @@ func TestRun(t *testing.T) {
 		{"/noexist", 0, -1}, // -1 means any non-zero; shells are different
 		{"false", 0, 1},
 		{"true", 0, 0},
-		{"./exit99.sh", 0, 99},
-		{"./signal.sh", 0, 1},
+		{"./testdata/exit99.sh", 0, 99},
+		{"./testdata/signal.sh", 0, 1},
 		{"sh -c true", 0, 0},
 		{"sh -c false", 0, 1},
-		{"sh -c ./exit99.sh", 0, 99},
-		{"./sleep.sh", 2, -1}, // -1 means any non-zero; shells are different
+		{"sh -c ./testdata/exit99.sh", 0, 99},
+		{"./testdata/sleep.sh", 2, -1}, // -1 means any non-zero; shells are different
 		{`sh -c "exit 0"`, 0, 0},
 		{`sh -c "exit 1"`, 0, 1},
 		{`sh -c "exit 99"`, 0, 99},
