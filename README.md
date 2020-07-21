@@ -1,5 +1,7 @@
 # Get Qmail Forwarding Rules From Webdav Storage
 
+**Careful now: it is still early days with this project.** Use at your own risk, but bug reports and flames welcome.
+
 Our mail system lets users create as many qmail aliases as they want, most of them forwarding to a single POP or IMAP store somewhere else.
 
 Delivery instructions for a user's addresses live on a webdav share accessed by stateless MX/forwarding hosts, and by the user, who can mount the shares locally.
