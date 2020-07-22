@@ -79,8 +79,8 @@ func TestSave(t *testing.T) {
 	var err error
 
 	udata := &users.Users{}
-	if err = udata.Save("/noexist"); err == nil {
-		t.Fatalf("writing to /noexist should have failed")
+	if err = udata.Save("/noexist/noexist"); err == nil {
+		t.Fatalf("writing to /noexist/noexist should have failed")
 	}
 
 	udata = &users.Users{
