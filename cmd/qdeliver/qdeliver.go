@@ -2,7 +2,8 @@ package main
 
 import (
 	"os"
-	"github.com/wavemechanics/deliver/app"
+
+	"github.com/wavemechanics/qdeliver/app"
 )
 
 func main() {

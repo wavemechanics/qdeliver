@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/wavemechanics/deliver/app"
-	"github.com/wavemechanics/deliver/internal/webdavd"
-	"github.com/wavemechanics/deliver/users"
+	"github.com/wavemechanics/qdeliver/app"
+	"github.com/wavemechanics/qdeliver/internal/webdavd"
+	"github.com/wavemechanics/qdeliver/users"
 )
 
 // TestFlags tests command line parsing problems

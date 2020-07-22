@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/wavemechanics/deliver/store"
+	"github.com/wavemechanics/qdeliver/store"
 )
 
 type Storage struct {

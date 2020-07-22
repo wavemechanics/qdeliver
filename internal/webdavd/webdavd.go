@@ -7,9 +7,9 @@ import (
 
 	"golang.org/x/net/webdav"
 
-	"github.com/wavemechanics/deliver/internal/webdavd/handler/basicauth"
-	"github.com/wavemechanics/deliver/internal/webdavd/handler/id"
-	"github.com/wavemechanics/deliver/internal/webdavd/handler/rlog"
+	"github.com/wavemechanics/qdeliver/internal/webdavd/handler/basicauth"
+	"github.com/wavemechanics/qdeliver/internal/webdavd/handler/id"
+	"github.com/wavemechanics/qdeliver/internal/webdavd/handler/rlog"
 )
 
 type Server struct {

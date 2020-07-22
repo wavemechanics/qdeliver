@@ -11,10 +11,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/wavemechanics/deliver/lookup"
-	"github.com/wavemechanics/deliver/store"
-	"github.com/wavemechanics/deliver/store/mem"
-	"github.com/wavemechanics/deliver/store/webdav"
+	"github.com/wavemechanics/qdeliver/lookup"
+	"github.com/wavemechanics/qdeliver/store"
+	"github.com/wavemechanics/qdeliver/store/mem"
+	"github.com/wavemechanics/qdeliver/store/webdav"
 )
 
 func makeHandler(db store.Storage) http.HandlerFunc {

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/wavemechanics/deliver/token"
+	"github.com/wavemechanics/qdeliver/token"
 )
 
 // Deliver runs delivery instructions in an address file.

@@ -8,7 +8,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/wavemechanics/deliver/users"
+	"github.com/wavemechanics/qdeliver/users"
 )
 
 func TestLoad(t *testing.T) {

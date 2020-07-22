@@ -2,14 +2,14 @@ package notify_test
 
 import (
 	"context"
-	"io/ioutil"
-	"path/filepath"
 	"fmt"
-	"testing"
-	"sync"
+	"io/ioutil"
 	"os"
+	"path/filepath"
+	"sync"
+	"testing"
 
-	"github.com/wavemechanics/deliver/notify"
+	"github.com/wavemechanics/qdeliver/notify"
 )
 
 func TestNotify(t *testing.T) {

@@ -3,7 +3,7 @@ package token_test
 import (
 	"testing"
 
-	"github.com/wavemechanics/deliver/token"
+	"github.com/wavemechanics/qdeliver/token"
 )
 
 func TestSplitFile(t *testing.T) {

@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/wavemechanics/deliver/lookup"
-	"github.com/wavemechanics/deliver/store/mem"
+	"github.com/wavemechanics/qdeliver/lookup"
+	"github.com/wavemechanics/qdeliver/store/mem"
 )
 
 func TestNotFoundNoDefault(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/wavemechanics/deliver/internal/webdavd/handler/rlog"
+	"github.com/wavemechanics/qdeliver/internal/webdavd/handler/rlog"
 )
 
 type Checker func(user, pass string) bool

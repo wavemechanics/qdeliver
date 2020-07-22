@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/wavemechanics/deliver/internal/webdavd/handler/id"
+	"github.com/wavemechanics/qdeliver/internal/webdavd/handler/id"
 )
 
 func Handle(next http.Handler) http.Handler {

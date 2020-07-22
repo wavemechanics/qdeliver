@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/wavemechanics/deliver/store"
+	"github.com/wavemechanics/qdeliver/store"
 )
 
 // Lookup returns the delivery instructions for localpart in storage s.

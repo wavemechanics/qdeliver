@@ -10,11 +10,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/wavemechanics/deliver/deliver"
-	"github.com/wavemechanics/deliver/lookup"
-	"github.com/wavemechanics/deliver/notify"
-	"github.com/wavemechanics/deliver/store/webdav"
-	"github.com/wavemechanics/deliver/users"
+	"github.com/wavemechanics/qdeliver/deliver"
+	"github.com/wavemechanics/qdeliver/lookup"
+	"github.com/wavemechanics/qdeliver/notify"
+	"github.com/wavemechanics/qdeliver/store/webdav"
+	"github.com/wavemechanics/qdeliver/users"
 )
 
 // Run is a more testable main
