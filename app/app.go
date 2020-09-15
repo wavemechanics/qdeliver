@@ -47,7 +47,7 @@ func Run(args []string) int {
 		return 2
 	}
 
-	localpart := flags.Arg(0)
+	localpart := strings.ToLower(flags.Arg(0))
 	domain := flags.Arg(1)
 	owner := strings.Split(localpart, "-")[0]
 	if owner == "" || localpart == "" || domain == "" {

@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/wavemechanics/qdeliver/app"
@@ -157,6 +158,7 @@ func TestInstructions(t *testing.T) {
 		{owner + `-111`, `sh -c "exit 111"`, 111},
 		{owner + `-0`, `sh -c "exit 0"`, 0},
 		{owner + `-sleep`, `sh -c "sleep 15"`, 1},
+		{owner + `-EXT`, `sh -c "exit 0"`, 0}, // this tests that webdav file matches are lower case
 	}
 
 	dir, err := ioutil.TempDir("", "TestInstructions")
@@ -194,9 +196,10 @@ func TestInstructions(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	// create the instruction file with a lower case name
 	for _, test := range tests {
 		if test.instructions != "" {
-			err = ioutil.WriteFile(filepath.Join(dir, test.address)+".txt", []byte(test.instructions), 0644)
+			err = ioutil.WriteFile(filepath.Join(dir, strings.ToLower(test.address))+".txt", []byte(test.instructions), 0644)
 			if err != nil {
 				t.Errorf("%s: can't create delivery instructions", test.address)
 				continue
@@ -222,11 +225,13 @@ func TestInstructions(t *testing.T) {
 		t.Fatal(err)
 	}
 
+	// The address extension ("-MISSING") is upper case so we can also verify
+	// file created in the webdav area is lower case.
 	args := []string{
 		"--db", dbpath,
 		"--handler", "testdata/handler.sh",
 		"--notify", "testdata/notify.sh",
-		owner + "-missing", domain,
+		owner + "-MISSING", domain,
 	}
 
 	os.Setenv("TESTDIR", dir) // for notify.sh
