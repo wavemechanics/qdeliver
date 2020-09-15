@@ -24,6 +24,9 @@ The first "-" delimited token in \fIlocalpart\fP is used as the owner in \fIuser
 If there is a file named \fIlocalpart\fP.txt in the webdav directory named in \fIuserdb\fP, then it is downloaded and used as the list of instructions.
 If there is no matching file, but there is a file named \fBdefault\fP.txt, then \fBdefault\fP.txt is copied to \fIlocalpart\fP.txt and its instructions are followed.
 
+\fIlocalpart\fP is lower-cased before any processing so files created in the webdav area are always lower case, and address matches are always lower case.
+This prevents problems created by senders who do not bother to read the RFCs.
+
 .SS userdb
 The \fIuserdb\fP file holds webdav login details for \fIowner\fP-\fIdomain\fP combinations.
 It is a JSON file that looks like this:
