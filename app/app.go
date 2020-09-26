@@ -80,6 +80,7 @@ func Run(args []string) int {
 
 	instructions, created, err := lookup.Lookup(ctx, storage, localpart)
 	if errors.Is(err, os.ErrNotExist) {
+		log.Printf("%s@%s: localpart not found, and no default\n", localpart, domain)
 		return 100 // permanent; address file doesn't exist
 	}
 	if err != nil {
